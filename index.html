@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灾情评估系统 - 创新技术解决方案</title>
+    <meta name="description" content="基于视觉大模型的灾情评估系统，解决GNSS拒止环境下的灾情分析难题">
+        <!-- 密码保护脚本 - 改进版 -->
+        <script>
+            // 在页面加载前隐藏所有内容
+            document.documentElement.style.display = 'none';
+            
+            function checkPassword() {
+                // 设置正确的密码
+                const correctPassword = "123456"; 
+                
+                // 获取本地存储中的验证状态
+                const isAuthenticated = sessionStorage.getItem('isAuthenticated');
+                
+                // 如果未验证，则显示密码输入框
+                if (!isAuthenticated) {
+                    let password = prompt("请输入访问密码:", "");
+                    
+                    // 检查密码是否正确
+                    if (password !== correctPassword) {
+                        alert("密码错误，无法访问页面！");
+                        // 显示拒绝访问页面
+                        document.write('<h1 style="text-align:center;margin-top:100px;font-family:sans-serif;">访问被拒绝</h1>');
+                        return false;
+                    } else {
+                        // 密码正确，设置会话存储，避免刷新页面后再次验证
+                        sessionStorage.setItem('isAuthenticated', 'true');
+                    }
+                }
+                
+                // 验证通过，显示页面内容
+                document.documentElement.style.display = '';
+            }
+            
+            // 页面加载完成后执行验证
+            window.onload = function() {
+                checkPassword();
+            };
+            
+            // 确保在DOM内容加载后立即执行验证
+            document.addEventListener('DOMContentLoaded', function() {
+                checkPassword();
+            });
+        </script>
+    <!-- TailwindCSS 通过CDN引入 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- 配置Tailwind -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white dark:bg-secondary-900 text-secondary-800 dark:text-secondary-100 transition-colors duration-300">
+    <!-- 导航栏 -->
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-secondary-900/80 backdrop-blur-md border-b border-secondary-200 dark:border-secondary-800">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="text-primary-600 dark:text-primary-400 text-2xl font-bold">灾情评估系统</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#overview" class="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">概述</a>
+                    <a href="#innovations" class="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">创新点</a>
+                    <a href="#team" class="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">团队</a>
+                    <a href="#materials" class="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">支撑材料</a>
+                </nav>
+                <button id="darkModeToggle" class="p-2 rounded-full hover:bg-secondary-100 dark:hover:bg-secondary-800 transition-colors">
+                    <i class="fa-solid fa-sun text-yellow-500 dark:hidden"></i>
+                    <i class="fa-solid fa-moon text-blue-300 hidden dark:inline-block"></i>
+                </button>
+                <button id="mobileMenuButton" class="md:hidden p-2 rounded-full hover:bg-secondary-100 dark:hover:bg-secondary-800 transition-colors">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- 移动端菜单 -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-secondary-900 border-b border-secondary-200 dark:border-secondary-800">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="#overview" class="py-2 text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">概述</a>
+                <a href="#innovations" class="py-2 text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">创新点</a>
+                <a href="#team" class="py-2 text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">团队</a>
+                <a href="#materials" class="py-2 text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">支撑材料</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="py-20 md:py-32 bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-secondary-900 dark:to-secondary-800">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-secondary-900 dark:text-white">
+                    基于视觉大模型的<span class="text-primary-600 dark:text-primary-400">灾情评估系统</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-secondary-600 dark:text-secondary-300 mb-10">
+                    解决灾后GNSS拒止环境下的数据采集难题，实现灾情分析的全流程自动化与智能化
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#overview" class="px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
+                        了解更多
+                    </a>
+                    <a href="#innovations" class="px-8 py-3 bg-white dark:bg-secondary-800 text-primary-600 dark:text-primary-400 border border-primary-200 dark:border-secondary-700 rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
+                        查看创新点
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 概述部分 -->
+    <section id="overview" class="py-16 md:py-24 bg-white dark:bg-secondary-900">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center text-secondary-900 dark:text-white">项目概述</h2>
+                <div class="prose dark:prose-invert max-w-none">
+                    <p class="text-lg text-secondary-700 dark:text-secondary-300 mb-6">
+                        在自然灾害频发背景下（龙卷风、地震、野火、飓风），灾后灾情分析的时效性与精准性对应急决策至关重要，灾后黄金救援时间通常为72小时，人工规划流程需12-24小时，延误灾情研判。
+                    </p>
+                    <p class="text-lg text-secondary-700 dark:text-secondary-300 mb-6">
+                        当前灾情分析面临三大核心问题：
+                    </p>
+                    <ul class="list-disc pl-6 space-y-2 text-secondary-700 dark:text-secondary-300">
+                        <li>GNSS信号在灾后环境中易中断导致定位失效</li>
+                        <li>灾情数据采集路径规划效率低</li>
+                        <li>人工评估主观性强且耗时</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 创新点部分 -->
+    <section id="innovations" class="py-16 md:py-24 bg-secondary-50 dark:bg-secondary-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center text-secondary-900 dark:text-white">核心创新点</h2>
+            
+            <div class="space-y-16">
+                <!-- 创新点1 -->
+                <div class="bg-white dark:bg-secondary-900 rounded-xl shadow-lg p-8 border border-secondary-100 dark:border-secondary-700 card-hover-glow">
+                    <div class="flex flex-col lg:flex-row gap-8">
+                        <div class="lg:w-1/2">
+                            <div class="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center mb-6">
+                                <i class="fa-solid fa-location-dot text-primary-600 dark:text-primary-400 text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-4 text-secondary-900 dark:text-white">GNSS拒止环境下的视觉定位技术</h3>
+                            <p class="text-secondary-700 dark:text-secondary-300 mb-4">
+                                传统无人机依赖GNSS定位，但灾害现场常因电磁干扰（如通信基站瘫痪）或地形遮挡（山区/高楼密布区域）导致信号中断。本系统融合视觉里程计与卫星图像绝对匹配定位：通过无人机实时采集图像序列计算运动轨迹（视觉里程计），结合灾前卫星图像进行特征匹配（绝对定位），在GNSS失效场景下实现米级定位精度，解决"无信号定位"难题。
+                            </p>
+                            <div class="flex flex-wrap gap-2 mt-4">
+                                <span class="px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 rounded-full text-sm">视觉里程计</span>
+                                <span class="px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 rounded-full text-sm">卫星图像匹配</span>
+                                <span class="px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 rounded-full text-sm">米级定位精度</span>
+                            </div>
+                        </div>
+                        <div class="lg:w-1/2">
+                            <div class="rounded-xl overflow-hidden shadow-lg border border-secondary-200 dark:border-secondary-700">
+                                <div class="image-carousel" data-autoplay="true" data-interval="5000">
+                                    <div class="carousel-container">
+                                        <div class="carousel-slide">
+                                            <img src="images/图片1.webp" alt="GNSS拒止环境下的视觉定位技术 - 图1" class="w-full h-auto">
+                                        </div>
+                                        <div class="carousel-slide">
+                                            <img src="images/after1.jpg" alt="GNSS拒止环境下的视觉定位技术 - 图2" class="w-full h-auto">
+                                        </div>
+                                        <div class="carousel-slide">
+                                            <img src="images/图片1.webp" alt="GNSS拒止环境下的视觉定位技术 - 图3" class="w-full h-auto">
+                                        </div>
+                                    </div>
+                                    <div class="carousel-prev">
+                                        <i class="fa-solid fa-chevron-left"></i>
+                                    </div>
+                                    <div class="carousel-next">
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                    </div>
+                                    <div class="carousel-indicators"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 创新点2 -->
+                <div class="bg-white dark:bg-secondary-900 rounded-xl shadow-lg p-8 border border-secondary-100 dark:border-secondary-700 card-hover-glow">
+                    <div class="flex flex-col lg:flex-row-reverse gap-8">
+                        <div class="lg:w-1/2">
+                            <div class="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center mb-6">
+                                <i class="fa-solid fa-route text-primary-600 dark:text-primary-400 text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-4 text-secondary-900 dark:text-white">视觉大模型辅助的灾情飞行任务自动规划</h3>
+                            <p class="text-secondary-700 dark:text-secondary-300 mb-4">
+                                灾情巡查需快速覆盖大面积区域，但传统路径规划依赖人工设定，存在效率低、响应迟缓等问题。本项目基于视觉大模型Molmo，结合卫星图像与历史数据，自动识别卫星图像中的房屋分布，结合灾害类型（如滑坡/倒塌）生成差异化的飞行任务清单（如重点区域重访、倾斜摄影角度），实现灾情热点区域的快速覆盖与数据采集，提升数据采集效率30%以上，显著降低人力成本。
+                            </p>
+                            <div class="flex flex-wrap gap-2 mt-4">
+                                <span class="px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 rounded-full text-sm">视觉大模型</span>
+                                <span class="px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 rounded-full text-sm">自动规划</span>
+                                <span class="px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 rounded-full text-sm">效率提升30%</span>
+                            </div>
+                        </div>
+                        <div class="lg:w-1/2">
+                            <div class="rounded-xl overflow-hidden shadow-lg border border-secondary-200 dark:border-secondary-700">
+                                <div class="image-carousel" data-autoplay="true" data-interval="6000">
+                                    <div class="carousel-container">
+                                        <div class="carousel-slide">
+                                            <img src="images/图片1.webp" alt="视觉大模型辅助的灾情飞行任务自动规划 - 图1" class="w-full h-auto">
+                                        </div>
+                                        <div class="carousel-slide">
+                                            <img src="images/after1.jpg" alt="视觉大模型辅助的灾情飞行任务自动规划 - 图2" class="w-full h-auto">
+                                        </div>
+                                        <div class="carousel-slide">
+                                            <img src="images/图片1.webp" alt="视觉大模型辅助的灾情飞行任务自动规划 - 图3" class="w-full h-auto">
+                                        </div>
+                                    </div>
+                                    <div class="carousel-prev">
+                                        <i class="fa-solid fa-chevron-left"></i>
+                                    </div>
+                                    <div class="carousel-next">
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                    </div>
+                                    <div class="carousel-indicators"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 创新点3 -->
+                <div class="bg-white dark:bg-secondary-900 rounded-xl shadow-lg p-8 border border-secondary-100 dark:border-secondary-700 card-hover-scale">
+                    <div class="flex flex-col lg:flex-row gap-8">
+                        <div class="lg:w-1/2">
+                            <div class="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center mb-6">
+                                <i class="fa-solid fa-chart-pie text-primary-600 dark:text-primary-400 text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-4 text-secondary-900 dark:text-white">基于视觉大模型的灾情评估</h3>
+                            <p class="text-secondary-700 dark:text-secondary-300 mb-4">
+                                传统评估依赖人工标注卫星图像和航拍影像，存在耗时长（单次耗时数天）、数据整合困难（多源信息碎片化）等问题。本系统训练多模态视觉大模型，自动识别房屋损毁等级（完好、部分倒塌、完全损毁），输出结构化灾情报告，准确率较人工提升40%，单次评估时间缩短至2小时以内，避免错过灾后黄金救援时间。
+                            </p>
+                            <div class="flex flex-wrap gap-2 mt-4">
+                                <span class="px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 rounded-full text-sm">多模态视觉大模型</span>
+                                <span class="px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 rounded-full text-sm">自动评估</span>
+                                <span class="px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 rounded-full text-sm">准确率提升40%</span>
+                            </div>
+                        </div>
+                        <div class="lg:w-1/2">
+                            <div class="rounded-xl overflow-hidden shadow-lg border border-secondary-200 dark:border-secondary-700">
+                                <!-- 替换为图片对比滑动组件 -->
+
+                                    <div class="image-comparison-slider">
+                                        <div class="image-comparison-container">
+                                            <img src="images/before1.jpg" alt="Before image" class="image-comparison-before">
+                                            <img src="images/after1.jpg" alt="After image" class="image-comparison-after">
+                                            <div class="image-comparison-slider-handle">
+                                                <div class="image-comparison-slider-handle-line"></div>
+                                                <div class="image-comparison-slider-handle-circle"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 max-w-3xl mx-auto text-center">
+                <p class="text-lg text-secondary-700 dark:text-secondary-300">
+                    本项目通过"视觉定位-智能规划-自动评估"技术闭环，旨在推动灾情评估从"人工驱动"向"数据驱动"转型，解决灾后GNSS拒止环境下的数据采集难题，实现灾情分析的全流程自动化与智能化。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 团队成员部分 -->
+    <section id="team" class="py-16 md:py-24 bg-white dark:bg-secondary-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center text-secondary-900 dark:text-white">团队成员</h2>
+            
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold mb-6 text-center text-secondary-800 dark:text-secondary-200">作者信息</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white dark:bg-secondary-800 rounded-lg overflow-hidden">
+                        <thead class="bg-secondary-100 dark:bg-secondary-700">
+                            <tr>
+                                <th class="py-3 px-4 text-left text-secondary-700 dark:text-secondary-300">学院</th>
+                                <th class="py-3 px-4 text-left text-secondary-700 dark:text-secondary-300">年级专业</th>
+                                <th class="py-3 px-4 text-left text-secondary-700 dark:text-secondary-300">学号</th>
+                                <th class="py-3 px-4 text-left text-secondary-700 dark:text-secondary-300">联系电话</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-secondary-200 dark:divide-secondary-700" id="authorTableBody">
+                            <!-- 这里将通过JavaScript动态填充 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="text-2xl font-bold mb-6 text-center text-secondary-800 dark:text-secondary-200">指导教师信息</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white dark:bg-secondary-800 rounded-lg overflow-hidden">
+                        <thead class="bg-secondary-100 dark:bg-secondary-700">
+                            <tr>
+                                <th class="py-3 px-4 text-left text-secondary-700 dark:text-secondary-300">单位</th>
+                                <th class="py-3 px-4 text-left text-secondary-700 dark:text-secondary-300">职务（职称）</th>
+                                <th class="py-3 px-4 text-left text-secondary-700 dark:text-secondary-300">联系电话</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-secondary-200 dark:divide-secondary-700" id="teacherTableBody">
+                            <!-- 这里将通过JavaScript动态填充 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 支撑材料部分 -->
+    <section id="materials" class="py-16 md:py-24 bg-secondary-50 dark:bg-secondary-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center text-secondary-900 dark:text-white">支撑材料</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 合作项目 -->
+                <div class="bg-white dark:bg-secondary-900 rounded-xl shadow-lg p-6 border border-secondary-100 dark:border-secondary-700">
+                    <h3 class="text-xl font-bold mb-4 text-secondary-900 dark:text-white flex items-center">
+                        <i class="fa-solid fa-handshake text-primary-600 dark:text-primary-400 mr-2"></i>
+                        合作项目
+                    </h3>
+                    <ul class="space-y-3 text-secondary-700 dark:text-secondary-300" id="projectsList">
+                        <!-- 这里将通过JavaScript动态填充 -->
+                    </ul>
+                </div>
+                
+                <!-- 专利与论文 -->
+                <div class="bg-white dark:bg-secondary-900 rounded-xl shadow-lg p-6 border border-secondary-100 dark:border-secondary-700">
+                    <h3 class="text-xl font-bold mb-4 text-secondary-900 dark:text-white flex items-center">
+                        <i class="fa-solid fa-file-lines text-primary-600 dark:text-primary-400 mr-2"></i>
+                        专利与论文
+                    </h3>
+                    <ul class="space-y-3 text-secondary-700 dark:text-secondary-300" id="patentsList">
+                        <!-- 这里将通过JavaScript动态填充 -->
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 技术亮点 -->
+            <div class="mt-12">
+                <h3 class="text-2xl font-bold mb-6 text-center text-secondary-800 dark:text-secondary-200">技术亮点</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="techHighlights">
+                    <!-- 这里将通过JavaScript动态填充 -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="py-8 bg-secondary-900 text-secondary-400">
+        <div class="container mx-auto px-4 text-center">
+            <p>© 2023 南京航空航天大学自动化学院. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <!-- 数据配置文件 -->
+    <script src="data/team.js"></script>
+    <script src="data/project.js"></script>
+    
+    <!-- JavaScript文件 -->
+    <script src="js/darkmode.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

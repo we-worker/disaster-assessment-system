@@ -1,0 +1,340 @@
+/* 全局样式 */
+body {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* 平滑滚动 */
+html {
+    scroll-behavior: smooth;
+}
+
+/* 图片悬停效果 */
+.innovation-image {
+    transition: transform 0.3s ease-in-out;
+}
+
+.innovation-image:hover {
+    transform: scale(1.02);
+}
+
+/* 卡片悬停效果 */
+.card-hover {
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* 新增卡片悬停效果 */
+.card-hover-rotate {
+    transition: all 0.4s ease;
+    transform-style: preserve-3d;
+}
+
+.card-hover-rotate:hover {
+    transform: rotateY(5deg) translateY(-5px);
+    box-shadow: -10px 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-hover-scale {
+    transition: all 0.3s ease;
+}
+
+.card-hover-scale:hover {
+    transform: scale(1.03);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.card-hover-glow {
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.card-hover-glow:hover {
+    box-shadow: 0 0 15px rgba(14, 165, 233, 0.5);
+    border-color: rgba(14, 165, 233, 0.3);
+}
+
+.dark .card-hover-glow:hover {
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+    border-color: rgba(56, 189, 248, 0.3);
+}
+
+/* 按钮悬停效果 */
+.btn-hover {
+    transition: all 0.3s ease;
+}
+
+.btn-hover:hover {
+    transform: scale(1.05);
+}
+
+/* 加载动画 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+/* 深色模式过渡 */
+.dark-transition {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* 卡片悬停效果 */
+.card-hover {
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.dark .card-hover:hover {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+/* 响应式表格 */
+@media (max-width: 640px) {
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+/* 图片懒加载占位符 */
+.lazy-image {
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+
+.lazy-image.loaded {
+    opacity: 1;
+}
+
+
+
+/* 图片对比滑动组件样式 */
+.image-comparison-container {
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.image-comparison-before,
+.image-comparison-after {
+    display: block;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.image-comparison-slider-handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: #fff;
+    cursor: ew-resize;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.image-comparison-slider-handle-line {
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.image-comparison-slider-handle-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-comparison-slider-handle-circle::before,
+.image-comparison-slider-handle-circle::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+/* 左箭头 */
+.image-comparison-slider-handle-circle::before {
+    border-width: 6px 9px 6px 0;
+    border-color: transparent #0ea5e9 transparent transparent;
+    left: 10px;
+}
+
+/* 右箭头 */
+.image-comparison-slider-handle-circle::after {
+    border-width: 6px 0 6px 9px;
+    border-color: transparent transparent transparent #0ea5e9;
+    right: 10px;
+}
+
+
+/* 图片轮播样式 - 修复版 */
+.image-carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    min-height: 300px; /* 添加最小高度 */
+}
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    min-height: 300px; /* 添加最小高度 */
+}
+
+.carousel-slide {
+    position: relative; /* 改为相对定位 */
+    width: 100%;
+    height: auto; /* 高度自适应 */
+    display: none; /* 默认隐藏 */
+    transition: opacity 0.5s ease;
+}
+
+.carousel-slide.active {
+    display: block; /* 激活时显示 */
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: auto; /* 高度自适应 */
+    object-fit: cover;
+    display: block; /* 确保图片正确显示 */
+}
+
+.carousel-prev,
+.carousel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.carousel-prev:hover,
+.carousel-next:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.dark .carousel-prev,
+.dark .carousel-next {
+    background-color: rgba(30, 41, 59, 0.7);
+}
+
+.dark .carousel-prev:hover,
+.dark .carousel-next:hover {
+    background-color: rgba(30, 41, 59, 0.9);
+}
+
+.carousel-prev {
+    left: 10px;
+}
+
+.carousel-next {
+    right: 10px;
+}
+
+.carousel-indicators {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.carousel-dot.active {
+    background-color: #fff;
+    transform: scale(1.2);
+}
+
+.dark .carousel-dot {
+    background-color: rgba(30, 41, 59, 0.5);
+}
+
+.dark .carousel-dot.active {
+    background-color: #0ea5e9;
+}
