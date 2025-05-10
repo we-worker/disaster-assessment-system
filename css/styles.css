@@ -243,7 +243,7 @@ html {
 .carousel-container {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 400px; /* 设置固定高度 */
     overflow: hidden;
     min-height: 300px; /* 添加最小高度 */
 }
@@ -262,8 +262,9 @@ html {
 
 .carousel-slide img {
     width: 100%;
-    height: auto; /* 高度自适应 */
+    height: 100%;
     object-fit: cover;
+    object-position: center; 
     display: block; /* 确保图片正确显示 */
 }
 
